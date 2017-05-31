@@ -43,6 +43,7 @@ namespace LimestoneDigitalTask.Services
             foreach (var product in products)
             {
                 product.SalePrice = product.Price - promocode.Discount * (product.Price / 100);
+                product.Discount = promocode.Discount;
             }
 
             return products;

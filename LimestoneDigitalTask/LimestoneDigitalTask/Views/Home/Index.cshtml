@@ -13,7 +13,7 @@
             <h4>@Html.Label(item.Name)</h4>
             @if (item.SalePrice != 0)
             {
-                <h3>Price: <span style="color: darkgray; text-decoration: line-through;">@item.Price.ToString()₴</span> <span style="color: red">@Html.Label(item.SalePrice + "₴")</span></h3>
+                <h3>Price: <span style="color: darkgray; text-decoration: line-through;">@item.Price.ToString()₴</span> <span style="color: red">@Html.Label(item.SalePrice + "₴ -" + item.Discount + "%")</span></h3>
             }
             else
             {
