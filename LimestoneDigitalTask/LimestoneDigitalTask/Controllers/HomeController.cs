@@ -22,6 +22,11 @@ namespace LimestoneDigitalTask.Controllers
             var code = Request.QueryString["promocode"];
             var products = string.IsNullOrEmpty(code) ? productService.GetProducts() : productService.GetProducts(code);
 
+            return View(products);
+        }
+
+        public ActionResult Product()
+        {
             return View();
         }
     }

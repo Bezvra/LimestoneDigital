@@ -17,6 +17,8 @@ namespace LimestoneDigitalTask.Helpers
         {
             //var companyMail = "mailname@yandex.ua";
             //var password = "pas$w0rd#";
+            var companyMail = "bioss-1000@yandex.ua";
+            var password = "q1w2e3r4t5";
 
             smtpClient = new SmtpClient();
             smtpClient.Host = "smtp.yandex.ua";
