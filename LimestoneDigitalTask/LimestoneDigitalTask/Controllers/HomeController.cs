@@ -19,7 +19,9 @@ namespace LimestoneDigitalTask.Controllers
 
         public ActionResult Index()
         {
-            var products = productService.GetProducts();
+            var code = Request.QueryString["promocode"];
+            var products = string.IsNullOrEmpty(code) ? productService.GetProducts() : productService.GetProducts(code);
+
             return View();
         }
     }

@@ -11,6 +11,7 @@ namespace LimestoneDigitalTask.Models.DTO
         public string Name { get; set; }
         public string Image { get; set; }
         public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
     }
 
     public class ProductInfoDTO
@@ -20,5 +21,6 @@ namespace LimestoneDigitalTask.Models.DTO
         public string Description { get; set; }
         public List<string> Image { get; set; }
         public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
     }
 }

@@ -212,6 +212,7 @@
     </Compile>
     <Compile Include="Models\DTO\Enums.cs" />
     <Compile Include="Models\DTO\ProductDTO.cs" />
+    <Compile Include="Models\DTO\PromocodeDTO.cs" />
     <Compile Include="Models\DTO\ShoppingCartDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\MailsHelper.cs" />
@@ -232,6 +233,7 @@
     <Content Include="App_Data\Store.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\Store.sql" />
     <Content Include="App_Data\Store_log.ldf">
       <DependentUpon>Store.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
