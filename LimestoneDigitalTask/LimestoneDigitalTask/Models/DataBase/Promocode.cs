@@ -23,6 +23,8 @@ namespace LimestoneDigitalTask.Models.DataBase
         public int id { get; set; }
         public string code { get; set; }
         public int discount { get; set; }
+        public int count { get; set; }
+        public int used_count { get; set; }
         public System.DateTime expires_date { get; set; }
         public Nullable<bool> is_used { get; set; }
     

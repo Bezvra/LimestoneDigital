@@ -37,6 +37,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="used_count" Type="int" Nullable="false" />
           <Property Name="expires_date" Type="datetime" Nullable="false" />
           <Property Name="is_used" Type="bit" />
         </EntityType>
@@ -47,6 +49,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="promocode_id" Type="int" />
+          <Property Name="is_closed" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK__Images__product___37A5467C">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
@@ -84,7 +87,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ShoppingC__promo__47DBAE45">
+        <Association Name="FK__ShoppingC__promo__72C60C4A">
           <End Role="Promocodes" Type="Self.Promocodes" Multiplicity="0..1" />
           <End Role="ShoppingCarts" Type="Self.ShoppingCarts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,7 +117,7 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
           </AssociationSet>
-          <AssociationSet Name="FK__ShoppingC__promo__47DBAE45" Association="Self.FK__ShoppingC__promo__47DBAE45">
+          <AssociationSet Name="FK__ShoppingC__promo__72C60C4A" Association="Self.FK__ShoppingC__promo__72C60C4A">
             <End Role="Promocodes" EntitySet="Promocodes" />
             <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
           </AssociationSet>
@@ -161,9 +164,11 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="used_count" Type="Int32" Nullable="false" />
           <Property Name="expires_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="is_used" Type="Boolean" />
-          <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__promo__47DBAE45" FromRole="Promocodes" ToRole="ShoppingCarts" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__promo__72C60C4A" FromRole="Promocodes" ToRole="ShoppingCarts" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -172,8 +177,9 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="promocode_id" Type="Int32" />
+          <Property Name="is_closed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ProductsShoppingCarts" Relationship="Self.FK__ProductsS__cart___5FB337D6" FromRole="ShoppingCarts" ToRole="ProductsShoppingCarts" />
-          <NavigationProperty Name="Promocode" Relationship="Self.FK__ShoppingC__promo__47DBAE45" FromRole="ShoppingCarts" ToRole="Promocodes" />
+          <NavigationProperty Name="Promocode" Relationship="Self.FK__ShoppingC__promo__72C60C4A" FromRole="ShoppingCarts" ToRole="Promocodes" />
         </EntityType>
         <Association Name="FK__Images__product___37A5467C">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
@@ -211,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ShoppingC__promo__47DBAE45">
+        <Association Name="FK__ShoppingC__promo__72C60C4A">
           <End Role="Promocodes" Type="Self.Promocode" Multiplicity="0..1" />
           <End Role="ShoppingCarts" Type="Self.ShoppingCart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -223,7 +229,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StoreDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductsShoppingCarts" EntityType="Self.ProductsShoppingCart" />
@@ -241,7 +247,7 @@
             <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
             <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
           </AssociationSet>
-          <AssociationSet Name="FK__ShoppingC__promo__47DBAE45" Association="Self.FK__ShoppingC__promo__47DBAE45">
+          <AssociationSet Name="FK__ShoppingC__promo__72C60C4A" Association="Self.FK__ShoppingC__promo__72C60C4A">
             <End Role="Promocodes" EntitySet="Promocodes" />
             <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
           </AssociationSet>
@@ -251,7 +257,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StoreDBModelStoreContainer" CdmEntityContainer="StoreDBEntities">
+        <EntityContainerMapping StorageEntityContainer="StoreDBModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="StoreDBModel.Image">
               <MappingFragment StoreEntitySet="Images">
@@ -286,6 +292,8 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="used_count" ColumnName="used_count" />
                 <ScalarProperty Name="expires_date" ColumnName="expires_date" />
                 <ScalarProperty Name="is_used" ColumnName="is_used" />
               </MappingFragment>
@@ -297,6 +305,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="promocode_id" ColumnName="promocode_id" />
+                <ScalarProperty Name="is_closed" ColumnName="is_closed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

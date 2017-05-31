@@ -23,6 +23,7 @@ namespace LimestoneDigitalTask.Models.DataBase
         public int id { get; set; }
         public string email { get; set; }
         public Nullable<int> promocode_id { get; set; }
+        public bool is_closed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsShoppingCart> ProductsShoppingCarts { get; set; }
