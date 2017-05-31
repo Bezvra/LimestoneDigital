@@ -6,3 +6,5 @@
 /LimestoneDigitalTask/LimestoneDigitalTask/bin
 /LimestoneDigitalTask/LimestoneDigitalTask/obj/Debug
 /LimestoneDigitalTask/packages
+/LimestoneDigitalTask/LimestoneDigitalTask/App_Data/Store.mdf
+/LimestoneDigitalTask/LimestoneDigitalTask/App_Data/Store_log.ldf

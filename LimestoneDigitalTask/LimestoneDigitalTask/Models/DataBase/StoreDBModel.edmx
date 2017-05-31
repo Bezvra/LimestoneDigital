@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="url" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsShoppingCarts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="cart_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promocodes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="expires_date" Type="datetime" Nullable="false" />
+          <Property Name="is_used" Type="bit" />
+        </EntityType>
+        <EntityType Name="ShoppingCarts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="promocode_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Images__product___37A5467C">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__cart___5FB337D6">
+          <End Role="ShoppingCarts" Type="Self.ShoppingCarts" Multiplicity="1" />
+          <End Role="ProductsShoppingCarts" Type="Self.ProductsShoppingCarts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingCarts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsShoppingCarts">
+              <PropertyRef Name="cart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__produ__5EBF139D">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductsShoppingCarts" Type="Self.ProductsShoppingCarts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsShoppingCarts">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShoppingC__promo__47DBAE45">
+          <End Role="Promocodes" Type="Self.Promocodes" Multiplicity="0..1" />
+          <End Role="ShoppingCarts" Type="Self.ShoppingCarts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocodes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ShoppingCarts">
+              <PropertyRef Name="promocode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoreDBModelStoreContainer">
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsShoppingCarts" EntityType="Self.ProductsShoppingCarts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promocodes" EntityType="Self.Promocodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCarts" EntityType="Self.ShoppingCarts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Images__product___37A5467C" Association="Self.FK__Images__product___37A5467C">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__cart___5FB337D6" Association="Self.FK__ProductsS__cart___5FB337D6">
+            <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
+            <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__produ__5EBF139D" Association="Self.FK__ProductsS__produ__5EBF139D">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShoppingC__promo__47DBAE45" Association="Self.FK__ShoppingC__promo__47DBAE45">
+            <End Role="Promocodes" EntitySet="Promocodes" />
+            <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Images__product___37A5467C" FromRole="Images" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="Self.FK__Images__product___37A5467C" FromRole="Products" ToRole="Images" />
+          <NavigationProperty Name="ProductsShoppingCarts" Relationship="Self.FK__ProductsS__produ__5EBF139D" FromRole="Products" ToRole="ProductsShoppingCarts" />
+        </EntityType>
+        <EntityType Name="ProductsShoppingCart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="cart_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsS__produ__5EBF139D" FromRole="ProductsShoppingCarts" ToRole="Products" />
+          <NavigationProperty Name="ShoppingCart" Relationship="Self.FK__ProductsS__cart___5FB337D6" FromRole="ProductsShoppingCarts" ToRole="ShoppingCarts" />
+        </EntityType>
+        <EntityType Name="Promocode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="expires_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_used" Type="Boolean" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__promo__47DBAE45" FromRole="Promocodes" ToRole="ShoppingCarts" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="promocode_id" Type="Int32" />
+          <NavigationProperty Name="ProductsShoppingCarts" Relationship="Self.FK__ProductsS__cart___5FB337D6" FromRole="ShoppingCarts" ToRole="ProductsShoppingCarts" />
+          <NavigationProperty Name="Promocode" Relationship="Self.FK__ShoppingC__promo__47DBAE45" FromRole="ShoppingCarts" ToRole="Promocodes" />
+        </EntityType>
+        <Association Name="FK__Images__product___37A5467C">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Images" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__produ__5EBF139D">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductsShoppingCarts" Type="Self.ProductsShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsShoppingCarts">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__cart___5FB337D6">
+          <End Role="ShoppingCarts" Type="Self.ShoppingCart" Multiplicity="1" />
+          <End Role="ProductsShoppingCarts" Type="Self.ProductsShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingCarts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsShoppingCarts">
+              <PropertyRef Name="cart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShoppingC__promo__47DBAE45">
+          <End Role="Promocodes" Type="Self.Promocode" Multiplicity="0..1" />
+          <End Role="ShoppingCarts" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocodes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ShoppingCarts">
+              <PropertyRef Name="promocode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoreDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductsShoppingCarts" EntityType="Self.ProductsShoppingCart" />
+          <EntitySet Name="Promocodes" EntityType="Self.Promocode" />
+          <EntitySet Name="ShoppingCarts" EntityType="Self.ShoppingCart" />
+          <AssociationSet Name="FK__Images__product___37A5467C" Association="Self.FK__Images__product___37A5467C">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__produ__5EBF139D" Association="Self.FK__ProductsS__produ__5EBF139D">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__cart___5FB337D6" Association="Self.FK__ProductsS__cart___5FB337D6">
+            <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
+            <End Role="ProductsShoppingCarts" EntitySet="ProductsShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShoppingC__promo__47DBAE45" Association="Self.FK__ShoppingC__promo__47DBAE45">
+            <End Role="Promocodes" EntitySet="Promocodes" />
+            <End Role="ShoppingCarts" EntitySet="ShoppingCarts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StoreDBModelStoreContainer" CdmEntityContainer="StoreDBEntities">
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="StoreDBModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="StoreDBModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsShoppingCarts">
+            <EntityTypeMapping TypeName="StoreDBModel.ProductsShoppingCart">
+              <MappingFragment StoreEntitySet="ProductsShoppingCarts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promocodes">
+            <EntityTypeMapping TypeName="StoreDBModel.Promocode">
+              <MappingFragment StoreEntitySet="Promocodes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="expires_date" ColumnName="expires_date" />
+                <ScalarProperty Name="is_used" ColumnName="is_used" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCarts">
+            <EntityTypeMapping TypeName="StoreDBModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCarts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="promocode_id" ColumnName="promocode_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
