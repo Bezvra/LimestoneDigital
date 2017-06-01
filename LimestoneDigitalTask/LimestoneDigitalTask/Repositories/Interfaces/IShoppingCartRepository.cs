@@ -8,5 +8,7 @@ namespace LimestoneDigitalTask.Repositories.Interfaces
 {
     public interface IShoppingCartRepository
     {
+        int CreateCart();
+        int FindCartByEmail(string email);
     }
 }

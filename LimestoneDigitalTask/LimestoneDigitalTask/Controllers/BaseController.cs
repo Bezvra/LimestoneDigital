@@ -12,5 +12,6 @@ namespace LimestoneDigitalTask.Controllers
     public class BaseController : Controller
     {
         protected ProductService productService { get; set; }
+        protected CartService cartService { get; set; }
     }
 }

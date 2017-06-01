@@ -20,7 +20,7 @@ namespace LimestoneDigitalTask.Models.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<string> Image { get; set; }
+        public List<string> Images { get; set; }
         public decimal Price { get; set; }
         public decimal SalePrice { get; set; }
         public int Discount { get; set; }

@@ -22,5 +22,16 @@ namespace LimestoneDigitalTask.Repositories
                 Price = product.price
             }).ToList();
         }
+
+        public ProductInfoDTO GetProduct(int id)
+        {
+            return db.Set<Product>().Where(product => product.id == id).Select(product => new ProductInfoDTO
+            {
+                Id = product.id,
+                Name = product.name,
+                Price = product.price,
+                Description = product.description
+            }).FirstOrDefault();
+        }
     }
 }

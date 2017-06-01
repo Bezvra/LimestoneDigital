@@ -47,7 +47,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="promocode_id" Type="int" />
           <Property Name="is_closed" Type="bit" Nullable="false" />
         </EntityType>
@@ -175,7 +175,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="promocode_id" Type="Int32" />
           <Property Name="is_closed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ProductsShoppingCarts" Relationship="Self.FK__ProductsS__cart___5FB337D6" FromRole="ShoppingCarts" ToRole="ProductsShoppingCarts" />

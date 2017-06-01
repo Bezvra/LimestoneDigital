@@ -1,8 +1,42 @@
-﻿
+﻿@model LimestoneDigitalTask.Models.DTO.ProductInfoDTO
 @{
     ViewBag.Title = "Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Product</h2>
+<div class="row col-sm-12">
+    @{
+        <h2>@Html.Label(Model.Name)</h2>
+        <div class="col-sm-12">
+            @foreach (var image in Model.Images)
+            {
+                <img src="@image" alt="@Model.Name" class="col-sm-4">
+            }
+        </div>
+        <div class="col-sm-12">
+            @if (Model.SalePrice != 0)
+            {
+                <h3>Price: <span style="color: darkgray; text-decoration: line-through;">@Model.Price.ToString()₴</span> <span style="color: red">@Html.Label(Model.SalePrice + "₴ (-" + Model.Discount + "%)")</span></h3>
+            }
+            else
+            {
+                <h3>Price: @Html.Label(Model.Price.ToString())</h3>
+            }
+            <h4>@Model.Description</h4>
+            <h2><button class="btn btn-primary" onclick="addToCart()">add to cart</button></h2>
+        </div>
+    }
+</div>
 
+<script>
+    function addToCart() {
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Cart")',
+            data: { productId: @Model.Id },
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+</script>

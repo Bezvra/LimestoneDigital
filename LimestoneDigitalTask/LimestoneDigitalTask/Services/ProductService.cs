@@ -48,5 +48,26 @@ namespace LimestoneDigitalTask.Services
 
             return products;
         }
+
+        public ProductInfoDTO GetProduct(int id)
+        {
+            var product = productRepository.GetProduct(id);
+            product.Images = imageRepository.GetImages(product.Id);
+
+            return product;
+        }
+
+        public ProductInfoDTO GetProduct(int id, string code)
+        {
+            var promocode = promocodeRepository.GetPromocode(code);
+            if (promocode == null) throw new BaseException(Enums.Errors.EmptyData);
+            if (promocode.ExpiresDate < DateTime.UtcNow) return GetProduct(id);
+            if (promocode.Count <= promocode.UsedCount) return GetProduct(id);
+            var product = GetProduct(id);
+            product.SalePrice = product.Price - promocode.Discount * (product.Price / 100);
+            product.Discount = promocode.Discount;
+
+            return product;
+        }
     }
 }

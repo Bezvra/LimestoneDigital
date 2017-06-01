@@ -168,6 +168,7 @@
     <Compile Include="Attributes\BaseExceptionAttritube.cs" />
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Data\Resources\ErrorsRes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -214,6 +215,7 @@
     <Compile Include="Models\DTO\ProductDTO.cs" />
     <Compile Include="Models\DTO\PromocodeDTO.cs" />
     <Compile Include="Models\DTO\ShoppingCartDTO.cs" />
+    <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\MailsHelper.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Repositories\PromocodeRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ShoppingCartRepository.cs" />
+    <Compile Include="Services\CartService.cs" />
     <Compile Include="Services\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -291,8 +294,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Product.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\Checkout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Ajax\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

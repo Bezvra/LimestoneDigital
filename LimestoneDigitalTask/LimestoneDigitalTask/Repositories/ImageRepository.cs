@@ -16,5 +16,10 @@ namespace LimestoneDigitalTask.Repositories
         {
             return db.Set<Image>().Where(image => image.product_id == id).Select(image => image.url).FirstOrDefault();
         }
+
+        public List<string> GetImages(int id)
+        {
+            return db.Set<Image>().Where(image => image.product_id == id).Select(image => image.url).ToList();
+        }
     }
 }

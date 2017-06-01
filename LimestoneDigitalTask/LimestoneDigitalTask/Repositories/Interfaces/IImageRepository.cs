@@ -9,5 +9,6 @@ namespace LimestoneDigitalTask.Repositories.Interfaces
     public interface IImageRepository
     {
         string GetImage(int id);
+        List<string> GetImages(int id);
     }
 }
