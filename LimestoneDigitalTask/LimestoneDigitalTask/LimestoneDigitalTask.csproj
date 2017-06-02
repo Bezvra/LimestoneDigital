@@ -296,9 +296,7 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ajax\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
