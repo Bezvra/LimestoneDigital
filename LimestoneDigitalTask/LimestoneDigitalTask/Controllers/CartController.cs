@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LimestoneDigitalTask.Models.DTO;
 using LimestoneDigitalTask.Services;
 
 namespace LimestoneDigitalTask.Controllers
@@ -16,7 +17,25 @@ namespace LimestoneDigitalTask.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var cart = new CartDTO();
+            var cartId = Session["CartId"];
+            var code = Request.QueryString["promocode"];
+            if (string.IsNullOrEmpty(code))
+            {
+                if (cartId != null)
+                {
+                    cart = cartService.GetCart((int)cartId);
+                }
+            }
+            else
+            {
+                if (cartId != null)
+                {
+                    cart = cartService.GetCart((int)cartId, code);
+                }
+            }
+
+            return View(cart);
         }
 
         public ActionResult Checkout()
@@ -35,7 +54,7 @@ namespace LimestoneDigitalTask.Controllers
             }
             else if (email != null)
             {
-                Session["CartId"] = cartService.FindCartByEmail((string) email, productId);
+                Session["CartId"] = cartService.FindCartByEmail((string)email, productId);
             }
             else
             {
@@ -43,6 +62,31 @@ namespace LimestoneDigitalTask.Controllers
             }
 
             return Content("Product added to your cart!");
+        }
+
+        [HttpPost]
+        public ActionResult SaveEmail(int id, string email)
+        {
+            cartService.SaveEmail(id, email);
+            Session["Email"] = email;
+
+            return Content("Email saved!");
+        }
+
+        [HttpPost]
+        public ActionResult SavePromocode(int id, string promocode)
+        {
+            cartService.SavePromocode(id, promocode);
+
+            return Content("Promocode saved!");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProduct(int id)
+        {
+            cartService.DeleteProduct(id);
+
+            return Content("Product deleted from shopping cart!");
         }
     }
 }

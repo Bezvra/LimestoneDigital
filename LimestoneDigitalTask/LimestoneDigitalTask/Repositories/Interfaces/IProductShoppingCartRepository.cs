@@ -9,5 +9,6 @@ namespace LimestoneDigitalTask.Repositories.Interfaces
     public interface IProductShoppingCartRepository
     {
         void AddToCart(int cartId, int productId);
+        void DeleteProduct(int id);
     }
 }

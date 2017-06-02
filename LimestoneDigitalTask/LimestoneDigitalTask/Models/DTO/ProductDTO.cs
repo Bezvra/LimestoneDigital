@@ -25,4 +25,13 @@ namespace LimestoneDigitalTask.Models.DTO
         public decimal SalePrice { get; set; }
         public int Discount { get; set; }
     }
+
+    public class ProductCartDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
+        public int Discount { get; set; }
+    }
 }

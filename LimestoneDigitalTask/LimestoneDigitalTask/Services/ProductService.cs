@@ -36,7 +36,7 @@ namespace LimestoneDigitalTask.Services
         public List<ShortProductInfoDTO> GetProducts(string code)
         {
             var promocode = promocodeRepository.GetPromocode(code);
-            if (promocode == null) throw new BaseException(Enums.Errors.EmptyData);
+            if (promocode == null) return GetProducts();
             if (promocode.ExpiresDate < DateTime.UtcNow) return GetProducts();
             if (promocode.Count <= promocode.UsedCount) return GetProducts();
             var products = GetProducts();

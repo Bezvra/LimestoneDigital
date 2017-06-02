@@ -1,6 +1,111 @@
-﻿
+﻿@model LimestoneDigitalTask.Models.DTO.CartDTO
 @{
     ViewBag.Title = "Shopping cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row col-sm-12">
+    @if (Model.Products == null)
+    {
+        <h2>Shopping cart is empty...</h2>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    @if (Model.Promocode == null)
+                    {
+                        <td>@Html.Label(product.Price.ToString())₴</td>
+                    }
+                    else
+                    {
+                        <td>Price: <span style="color: darkgray; text-decoration: line-through;">@product.Price.ToString()₴</span> <span style="color: red">@Html.Label(product.SalePrice + "₴ (-" + product.Discount + "%)")</span></td>
+                    }
+                    <td><button class="btn btn-danger" onclick="deleteProduct(@product.Id.ToString())">delete</button></td>
+                </tr>
+            }
+            <tr>
+                <td>Total sum:</td>
+                @if (Model.Promocode == null)
+                {
+                    <td>@Html.Label(Model.TotalSum.ToString())₴</td>
+                }
+                else
+                {
+                    <td><span style="color: darkgray; text-decoration: line-through;">@Model.TotalSum.ToString()₴</span> <span style="color: red">@Html.Label(Model.SaleTotalSum + "₴ (-" + Model.Products[0].Discount + "%)")</span></td>
+                }
+                <td></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                @if (Model.Email != null)
+                {
+                    <td colspan="3">@Html.Label(Model.Email)</td>
+                }
+                else
+                {
+                    <td>Email:</td>
+                    <td><input id="email" name="Email" /></td>
+                    <td><button class="btn btn-default" onclick="saveEmail()">save email</button></td>
+                }
+            </tr>
+            <tr>
+                @if (Model.Promocode != null)
+                {
+                    <td colspan="3">@Html.Label(Model.Promocode)</td>
+                }
+                else
+                {
+                    <td>Promocode:</td>
+                    <td><input id="promocode" name="Promocode" /></td>
+                    <td><button class="btn btn-default" onclick="savePromocode()">save promocode</button></td>
+                }
+            </tr>
+        </table>
+    }
+</div>
+<script>
+    function saveEmail() {
+        $.ajax({
+            url: '@Url.Action("SaveEmail", "Cart")',
+            data: { id:@Model.Id, email: $('#email').val() },
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+                window.location.replace("./Cart");
+            }
+        });
+    }
+
+    function savePromocode() {
+        $.ajax({
+            url: '@Url.Action("SavePromocode", "Cart")',
+            data: { id:@Model.Id, promocode: $('#promocode').val() },
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+                window.location.replace("./Cart?promocode="+$('#promocode').val());
+            }
+        });
+    }
+
+    function deleteProduct(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteProduct", "Cart")',
+            data: { id:id },
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+                if ($('#promocode').val() === undefined) {
+                    window.location.replace("./Cart");
+                } else {
+                    window.location.replace("./Cart?promocode=" + $('#promocode').val());
+                }
+            }
+        });
+    }
+</script>
