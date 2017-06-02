@@ -64,5 +64,13 @@ namespace LimestoneDigitalTask.Repositories
             updatedCart.email = email;
             db.SaveChanges();
         }
+
+        public void CloseCart(int cartId)
+        {
+            var closedCart = db.Set<ShoppingCart>().FirstOrDefault(cart => cart.id == cartId && cart.is_closed == false);
+            if (closedCart == null) throw new BaseException(Enums.Errors.EmptyData);
+            closedCart.is_closed = true;
+            db.SaveChanges();
+        }
     }
 }

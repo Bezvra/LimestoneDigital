@@ -10,5 +10,6 @@ namespace LimestoneDigitalTask.Repositories.Interfaces
     public interface IPromocodeRepository
     {
         PromocodeInfoDTO GetPromocode(string code);
+        void UpdatePromocode(string code);
     }
 }

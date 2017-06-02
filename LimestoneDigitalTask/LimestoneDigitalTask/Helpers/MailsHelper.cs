@@ -15,12 +15,12 @@ namespace LimestoneDigitalTask.Helpers
 
         public MailsHelper()
         {
-            //var companyMail = "mailname@yandex.ua";
-            //var password = "pas$w0rd#";
+            //var companyMail = "mailname@site.com";
+            //var password = "pas$w0rd#";";
 
             smtpClient = new SmtpClient();
-            smtpClient.Host = "smtp.yandex.ua";
-            smtpClient.Port = 25;
+            smtpClient.Host = "smtp.zoho.eu";
+            smtpClient.Port = 465;
             smtpClient.EnableSsl = true;
             smtpClient.Timeout = 2 * 60 * 1000;
             smtpClient.UseDefaultCredentials = false;
@@ -32,21 +32,29 @@ namespace LimestoneDigitalTask.Helpers
             message.IsBodyHtml = true;
         }
 
-        public void Send(string email, List<MailCartDTO> list, string promoCode)
+        public void Send(CartDTO cart)
         {
-            message.To.Add(email);
-            message.Subject = "Store: shopping cart";
+            message.To.Add(cart.Email);
+            message.Subject = "Store application: shopping cart";
 
-            var cart = "";
+            var carts = "";
             var sum = 0m;
-            foreach (var item in list)
+            foreach (var item in cart.Products)
             {
-                cart += item.Name + ": " + item.Price + "<br/>";
-                sum += item.Price;
+                if (cart.Promocode == null)
+                {
+                    carts += item.Name + ": " + item.Price + "<br/>";
+                    sum += item.Price;
+                }
+                else
+                {
+                    carts += item.Name + ": " + item.SalePrice + "<br/>";
+                    sum += item.SalePrice;
+                }
             }
 
-            message.Body = "Hello!<br/><br/>Your shopping cart:<br/>" + cart + "<hr/>Total:" + sum;
-            message.Body += string.IsNullOrEmpty(promoCode) ? "<br/><br/>--<br/>Best regards, Store team." : "Used promocode: " + promoCode + "<br/><br/>--<br/>Best regards, Store team.";
+            message.Body = "Hello!<br/><br/>Your shopping cart:<br/>" + carts + "<hr/>Total:" + sum;
+            message.Body += string.IsNullOrEmpty(cart.Promocode) ? "<br/><br/>--<br/>Best regards, Store team." : "Used promocode: " + cart.Promocode + "<br/><br/>--<br/>Best regards, Store team.";
 
             smtpClient.Send(message);
         }

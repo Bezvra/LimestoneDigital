@@ -37,19 +37,25 @@
                 <div class="navbar-brand navbar-right">
                     @if (email != null)
                     {
-                        if (code != null)
-                        {
-                            @Html.ActionLink("Proceed to checkout", "Checkout", "Cart", new { promocode = code }, null)
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Proceed to checkout", "Checkout", "Cart")
-                        }
+                        <button class="btn btn-link" onclick="checkout()">Proceed to checkout</button>
                     }
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function checkout() {
+            $.ajax({
+                url: '@Url.Action("Checkout", "Cart")',
+                data: {},
+                type: 'POST',
+                success: function (data) {
+                    alert(data);
+                    window.location.replace("./");
+                }
+            });
+        }
+    </script>
     <div class="container body-content">
         @RenderBody()
         <hr />

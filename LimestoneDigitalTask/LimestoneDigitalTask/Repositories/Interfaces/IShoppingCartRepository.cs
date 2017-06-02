@@ -14,5 +14,6 @@ namespace LimestoneDigitalTask.Repositories.Interfaces
         CartDTO GetCart(int cartId);
         void SavePromocode(int cartId, int promocodeId);
         void SaveEmail(int cartId, string email);
+        void CloseCart(int cartId);
     }
 }

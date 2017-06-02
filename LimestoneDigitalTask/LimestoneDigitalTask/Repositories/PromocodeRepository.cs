@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using LimestoneDigitalTask.Helpers;
 using LimestoneDigitalTask.Models.DataBase;
 using LimestoneDigitalTask.Models.DTO;
 using LimestoneDigitalTask.Repositories.Interfaces;
@@ -26,6 +27,17 @@ namespace LimestoneDigitalTask.Repositories
                 Discount = promocode.discount
             }).FirstOrDefault();
             ;
+        }
+
+        public void UpdatePromocode(string code)
+        {
+            var updatedPromocode = db.Set<Promocode>().FirstOrDefault(promocode => promocode.code == code && promocode.is_used == false);
+            if(updatedPromocode == null) throw new BaseException(Enums.Errors.EmptyData);
+            updatedPromocode.count++;
+            if (updatedPromocode.count > updatedPromocode.used_count)
+            {
+                updatedPromocode.is_used = true;
+            }
         }
     }
 }

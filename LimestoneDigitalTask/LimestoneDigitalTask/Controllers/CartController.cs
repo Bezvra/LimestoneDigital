@@ -38,11 +38,6 @@ namespace LimestoneDigitalTask.Controllers
             return View(cart);
         }
 
-        public ActionResult Checkout()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult AddToCart(int productId)
         {
@@ -87,6 +82,17 @@ namespace LimestoneDigitalTask.Controllers
             cartService.DeleteProduct(id);
 
             return Content("Product deleted from shopping cart!");
+        }
+
+        [HttpPost]
+        public ActionResult Checkout()
+        {
+            var id = Session["CartId"];
+            cartService.SendCartToEmail((int)id);
+            Session["CartId"] = null;
+            Session["Email"] = null;
+
+            return Content("Proceed to checkout!");
         }
     }
 }

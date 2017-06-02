@@ -35,7 +35,7 @@
                 }
                 else
                 {
-                    <td><span style="color: darkgray; text-decoration: line-through;">@Model.TotalSum.ToString()₴</span> <span style="color: red">@Html.Label(Model.SaleTotalSum + "₴ (-" + Model.Products[0].Discount + "%)")</span></td>
+                    <td><span style="color: darkgray; text-decoration: line-through;">@Model.TotalSum.ToString()₴</span> <span style="color: red">@Html.Label(Model.SaleTotalSum + "₴")</span></td>
                 }
                 <td></td>
             </tr>
@@ -44,7 +44,7 @@
             <tr>
                 @if (Model.Email != null)
                 {
-                    <td colspan="3">@Html.Label(Model.Email)</td>
+                    <td colspan="3">@Model.Email</td>
                 }
                 else
                 {
@@ -56,7 +56,7 @@
             <tr>
                 @if (Model.Promocode != null)
                 {
-                    <td colspan="3">@Html.Label(Model.Promocode)</td>
+                    <td colspan="3">@Model.Promocode</td>
                 }
                 else
                 {
@@ -100,11 +100,7 @@
             type: 'POST',
             success: function (data) {
                 alert(data);
-                if ($('#promocode').val() === undefined) {
-                    window.location.replace("./Cart");
-                } else {
-                    window.location.replace("./Cart?promocode=" + $('#promocode').val());
-                }
+                window.location.replace("./Cart");
             }
         });
     }

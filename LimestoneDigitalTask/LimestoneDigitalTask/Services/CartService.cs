@@ -71,6 +71,17 @@ namespace LimestoneDigitalTask.Services
             cartRepository.SavePromocode(cartId, promocode.Id);
         }
 
+        public void SendCartToEmail(int id)
+        {
+            var cart = GetCart(id);
+            new MailsHelper().Send(cart);
+            if (cart.Promocode != null)
+            {
+                promocodeRepository.UpdatePromocode(cart.Promocode);
+            }
+            cartRepository.CloseCart(id);
+        }
+
         public CartDTO GetCart(int cartId, string code)
         {
             var promocode = promocodeRepository.GetPromocode(code);
